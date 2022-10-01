@@ -1,0 +1,36 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}My Account Summary{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">My Account</h2> 
+        <p class="">{{company}}
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></p>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Summary Of My Account </h4><hr />
+              <p>Balance In My Wallet: <span class="text-success">&#8358;<b>{{ cust_contrb.wallet }}</b></span></p>
+              <p>Total Amount Contributed: <b>&#8358;{{ cust_contrb.total }}</b></p>
+              <p>Monthly Commission Deducted: <b>&#8358;{{ cust_contrb.charges }}</b></p>
+              <p>Contribution Duration This Month: <b>{{ cust_contrb.duration }} Days</b></p>
+              <p>Current Contribution Period: <b>{{ cust_contrb.contribution_period }}</b></p>
+              <p>Last Contribution Deducted: <b>{{ cust_contrb.deducted_commission_for }}</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

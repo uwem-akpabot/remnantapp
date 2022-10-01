@@ -1,0 +1,179 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Reports{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Reports</h2> 
+        <p class="">Click on the headings below for details
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></p>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Company's total funds: 
+                {% for funds in admin_total_funds %}
+                  <span class="text-success text-bold"> &#8358;{{ funds.balance }}</span>
+                {% endfor %}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container overflow-hidden my-5 px-lg-0">
+        <div class="container about px-lg-0">
+          <div class="row g-0 mx-lg-0">
+            <div class="col-12 about-text py-0 wow fadeIn" data-wow-delay="0.5s">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header my-0" id="flush-headingOne">
+                    <button class="accordion-button collapsed py-0 my-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                      <span class="btn btn-primary">Customers' Account Summary </span>
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-12 col-sm-12 col-lg-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <h4 class="card-title">Customers' Account Summary</h4>
+                                <table class="table table-striped table-responsive" id="myTable">
+                                  <thead>
+                                    <tr>
+                                      <th>Customer</th>
+                                      <th>Commission</th>
+                                      <th>Total</th>
+                                      <th>Wallet</th>
+                                      <th>Duration</th>
+                                      <th>Period</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for cus in cust_contrb %}
+                                    <tr>
+                                      <td>{{cus.customer.name}}</td>
+                                      <td>&#8358;{{cus.charges}}</td>
+                                      <td>&#8358;{{cus.total}}</td>
+                                      <td>&#8358;{{cus.wallet}}</td>
+                                      <td>{{cus.duration}} day(s)</td>
+                                      <td>{{cus.contribution_period}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                   </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header my-0" id="flush-headingTwo">
+                    <button class="accordion-button collapsed py-0 my-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                      <span class="btn btn-primary">Customer/Company's Transaction</span></h4>
+                    </button>
+                  </h2>
+                  <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">Deposit/Withdraw Transactions</h5>
+                                <table class="table table-striped table-responsive" id="myTable2">
+                                  <thead>
+                                    <tr>
+                                      <th>Transaction Detail</th>
+                                      <th>Type/Date</th>
+                                      <th>Amount</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for com in company_acct %}
+                                    <tr>
+                                      <td>{{com.transaction_detail}}</td>
+                                      <td><b>
+                                        {% if com.transaction_type == 'Deposit' %}
+                                          <span class="text-success">{{com.transaction_type}} {{com.created_at|date:"d/m/Y" }}</span>
+                                        {% else %}
+                                          <span class="text-danger">{{com.transaction_type}} {{com.created_at|date:"d/m/Y" }}</span>
+                                        {% endif %}
+                                      </b></span></td>
+                                      <td>&#8358;<b>{{com.amount}}</b></td>
+                                    </tr>
+                                    {% endfor %}
+                                   </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="accordion-item">
+                  <h2 class="accordion-header my-0" id="flush-headingThree">
+                    <button class="accordion-button collapsed py-0 my-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                      <span class="btn btn-primary">Other</span></h4>
+                    </button>
+                  </h2>
+                  <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">Others</h5>
+                                <table class="table table-striped table-responsive" id="myTable2">
+                                  <thead>
+                                    <tr>
+                                      <th>Customer</th>
+                                      <th>Commission</th>
+                                      <th>Total</th>
+                                      <th>Wallet</th>
+                                      <th>Duration</th>
+                                      <th>Period</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for cus in cust_contrb %}
+                                    <tr>
+                                      <td>{{cus.customer.name}}</td>
+                                      <td>&#8358;{{cus.charges}}</td>
+                                      <td>&#8358;{{cus.total}}</td>
+                                      <td>&#8358;{{cus.wallet}}</td>
+                                      <td>{{cus.duration}} day(s)</td>
+                                      <td>{{cus.contribution_period}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                   </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

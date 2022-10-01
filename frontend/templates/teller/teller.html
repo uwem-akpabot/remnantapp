@@ -1,0 +1,52 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Teller{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12">
+      <div class="mb-4">
+        <h2 class="mb-2">Tellers</h2>
+        <h5 class="text-700 fw-semi-bold">Browse teller profiles, edit, and delete.</h5>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Browse tellers</h4>
+              <table class="table table-striped table-responsive" id="myTable">
+                <thead>
+                  <tr>
+                    <th>Teller</th><th>Phone</th><th>Gender</th><th>Address</th><th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for tel in tellers %}
+                  <tr>
+                    <td><b><a href="{% url 'teller_detail' tel.id %}" class="font-weight-bold text-primary" title="Profile">
+                      {{tel.name}}</a></b></td>
+                    <td>{{tel.tel}}</td>
+                    <td>{{tel.gender}}</td>
+                    <td>{{tel.home_addr}}</td>
+                    <td class="align-middle pe-0">
+                      <a href="{% url 'update_teller' tel.id %}" class="font-weight-bold text-warning" title="Update">
+                          <span data-feather="edit"></span></a> &nbsp;
+                      <a href="{% url 'delete_teller' tel.id %}" class="font-weight-bold text-danger" title="Delete">
+                          <span data-feather="delete"></span> </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

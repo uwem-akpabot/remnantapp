@@ -1,0 +1,99 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Create account{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Register a new user</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}}</h5>
+      </div>
+	    <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Create account</h4>
+            	<p class="card-description">Fill out this form to register a new user</p>
+            	<form method="POST" action="." class="forms-sample">
+			  		    {% csrf_token %}
+                <div class="row">
+              		<div class="col-6 form-group pb-3">
+                    <label for="exampleInputUsername1">Username for login</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputUsername1" placeholder="Username" required />
+                    <small id="emailHelp" class="form-text text-muted">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+                  </div>
+                  <div class="col-6 form-group pb-3">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" name="password1" class="form-control" id="exampleInputPassword1" placeholder="Password" required />
+                    <small id="emailHelp" class="form-text text-muted">
+                     Your password must contain at least 8 characters with numbers and alphabets.</small>
+                  </div>
+                  <div class="col-6 form-group pb-3">
+                    <label for="exampleInputConfirmPassword1">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" id="exampleInputConfirmPassword1" placeholder="Re-type the password" />
+                    <small id="emailHelp" class="form-text text-muted">Enter the same password as before, for verification.</small>
+                  </div>
+                  <div class="col-6 form-group pb-3">
+                    <label for="exampleInputPassword1">Choose user type</label>
+                    <select class="form-control" name="account_type" required>
+
+                    {% if request.user.is_authenticated %}
+                      {% if not user.userprofile.is_cust %}
+
+                        {% if user.userprofile.is_dir %}
+                          <option value="mgr">Manager</option>
+                          <option value="teller">Teller</option>
+                          <option value="cust">Customer</option>
+
+                        {% elif user.userprofile.is_mgr %}
+                          <option value="teller">Teller</option>
+                          <option value="cust">Customer</option>
+
+                        {% elif user.userprofile.is_teller %}
+                          <option value="cust">Customer</option>
+
+                        {% else %} 
+                          Not applicable
+                        {% endif %}
+
+                      {% endif %}
+                    {% endif %}
+                    </select>
+                  </div>
+
+                  <div class="col-6 form-group pb-3">
+                    <label>First name</label>
+                    <input type="text" name="first_name" class="form-control" id="exampleInputFirstname" placeholder="First name" required />
+                    <small id="" class="form-text text-muted">Enter at least 5 characters.</small>
+                  </div>
+                  <div class="col-6 form-group pb-3">
+                    <label>Surname</label>
+                    <input type="text" name="last_name" class="form-control" id="exampleInputLastname" placeholder="Surname" required />
+                    <small id="" class="form-text text-muted">Enter at least 5 characters.</small>
+                  </div>
+
+
+                  <input type="text" name="created_by" class="form-control" value="{{user.userprofile.first_name}} {{user.userprofile.last_name}}" style="display: none" />
+              		<!--
+              		<div class="form-check form-check-flat form-check-primary">
+                		<label class="form-check-label">
+                  		<input type="checkbox" class="form-check-input" /> Remember me </label>
+              		</div> -->
+              		<div class="col-6 form-group pb-3">
+                    <button class="btn btn-primary btn-rounded mr-2">Create account</button>
+                  </div>
+                  <br />
+                </div>
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

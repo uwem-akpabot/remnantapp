@@ -1,0 +1,38 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Delete customer{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Delete customer</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Are you sure you want to delete <span class="text-primary">{{customer.name}}</span>?</h4>
+            	<form method="POST" action="{% url 'delete_customer' customer.id %}" class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">	            	
+            		<div class="col-6 form-group pb-3">
+            			<a href="javascript:history.back()" class="btn btn-info btn-sm btn-rounded mr-2">Cancel</a> &nbsp; 
+            			<input type="submit" name="Confirm" class="btn btn-danger btn-sm btn-rounded mr-2" />
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

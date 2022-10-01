@@ -1,0 +1,60 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Withdrawal{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Withdrawal</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Withdraw funds</h4>
+            	<p class="card-description">Click to update customers' withdrawal</p>
+            	<p class="text-primary"><u>Customer</u>: <b>{{customer.name}}</b></p>
+              <form method="POST" action="." class="forms-sample">
+                {% csrf_token %}
+                <input type="text"value="{{customer.id}}" name="customer" hidden />
+                <input type="text"  name="transaction" value="Deposit" hidden />
+                <input type="text" name="recorded_by" value="{{user.userprofile.first_name}} {{user.userprofile.last_name}}" hidden />
+
+                <div class="row">
+	                <div class="col-6 form-group pb-3">
+						<label for="">Withdrawal amount (in Naira)</label>
+						<input type="number" class="form-control" name="amount" placeholder="Type the amount ..." required />
+					</div>
+					<div class="col-6 form-group pb-3">
+						<label for="">Wallet balance</label>
+						<input type="text" class="form-control" name="wallet_balance" value="{{cust_contrb.wallet}}" readonly />
+				  	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Transaction</label>
+	              		<input type="text" class="form-control" name="transaction" value="Withdrawal" readonly />
+	                </div>
+	                <!--
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{customer.created_by}}" readonly />
+	            	</div> -->
+            		<div class="col-6 form-group pb-4">&nbsp;<br />
+            			<button class="btn btn-primary btn-rounded mr-2">Make withdrawal</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Add contribution{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Add contribution</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Add contribution</h4>
+            	<p class="card-description">Click to update customers' contribution</p>
+            	<form method="POST" action="." class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Customer</label>
+	              		<select class="form-control" name="customer" required>
+	              			<option value="">- Choose customer -</option>
+	              		{% for cust in customer %}
+	              			<option value="{{cust.id}}">{{cust.name}}</option>
+	              		{% endfor %}
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Transaction</label>
+	              		<input type="text" class="form-control" name="transaction" value="Deposit" readonly />
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Amount (in Naira)</label>
+	              		<select class="form-control" name="amount" required>
+	              			<option value="">- Choose amount -</option>
+	                     	<option value="1000">&#8358;1,000</option> 
+	                     	<option value="1500">&#8358;1,500</option> 
+	                     	<option value="2000">&#8358;2,000</option> 
+	                     	<option value="2500">&#8358;2,500</option> 
+	                     	<option value="3000">&#8358;3,000</option> 
+	                     	<option value="4000">&#8358;4,000</option> 
+	                     	<option value="5000">&#8358;5,000</option>
+	                     	<option value="6000">&#8358;6,000</option>  
+	                     	<option value="7000">&#8358;7,000</option> 
+	                     	<option value="8000">&#8358;8,000</option> 
+	                     	<option value="9000">&#8358;9,000</option>
+	                     	<option value="10000">&#8358;10,000</option>                
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Payment date</label>
+	              		<input type="date" name="payment_date" class="form-control" required />
+	                </div>
+	                <!--
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{customer.created_by}}" readonly />
+	            	</div> -->
+            		<div class="col-6 form-group pb-4">&nbsp;<br />
+            			<button class="btn btn-primary btn-rounded mr-2">Add contribution</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Customer{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12">
+      <div class="mb-4">
+        <h2 class="mb-2">Managers</h2>
+        <h5 class="text-700 fw-semi-bold">Browse manager profiles, edit, and delete.</h5>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Browse managers</h4>
+              <table class="table table-striped table-responsive" id="myTable">
+                <thead>
+                  <tr>
+                    <th>Manager</th><th>Phone</th><th>Gender</th><th>Address</th><th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for mgr in managers %}
+                  <tr>
+                    <td><b><a href="{% url 'manager_detail' mgr.id %}" class="font-weight-bold text-primary" title="Profile">
+                      {{mgr.name}}</a></b></td>
+                    <td>{{mgr.tel}}</td>
+                    <td>{{mgr.gender}}</td>
+                    <td>{{mgr.home_addr}}</td>
+                    <td class="align-middle pe-0">
+                      <a href="{% url 'update_manager' mgr.id %}" class="font-weight-bold text-warning" title="Update">
+                          <span data-feather="edit"></span></a> &nbsp;
+                      <a href="{% url 'delete_manager' mgr.id %}" class="font-weight-bold text-danger" title="Delete">
+                          <span data-feather="delete"></span> </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

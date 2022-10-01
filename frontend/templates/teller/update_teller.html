@@ -1,0 +1,75 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Update customer{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Update teller information</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Edit details</h4>
+            	<p class="card-description">Click to edit the values on this form and complete customer information</p>
+            	<form method="POST" action="." class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">
+                	<div class="col-6 form-group pb-3">
+	              		<label for="">Name</label>
+	              		<input type="text" name="name" value="{{teller.name}}" class="form-control" readonly />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Gender</label>
+	              		<select class="form-control" name="gender" required>
+	              			<option value="{{teller.gender}}" selected>{{teller.gender}}</option>
+	                    	<option value="Male">Male</option>
+	                     	<option value="Female">Female</option>                 
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Phone</label>
+	              		<input type="text" name="tel" value="{{teller.tel}}" class="form-control" required />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Home address</label>
+	              		<input type="text" name="home_addr" value="{{teller.home_addr}}" class="form-control" />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Next of kin</label>
+	              		<input type="text" name="kin_name" value="{{teller.kin_name}}" class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Next of kin phone</label>
+	              		<input type="text" name="kin_tel" class="form-control" value="{{teller.kin_tel}}" />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Relationship with kin</label>
+	              		<input type="text" name="kin_relationship" value="{{teller.kin_relationship}}" class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{user.userprofile.first_name}} {{user.userprofile.last_name}}" readonly />
+	            	</div>
+            		<div class="col-6 form-group pb-3">
+            			<br />
+            			<button class="btn btn-primary btn-rounded mr-2">Update teller</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Add contribution{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Deposit new contribution</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Deposit new contribution</h4>
+            	<p class="card-description">Click to update customers' contribution</p>
+            	<form method="POST" action="." class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Contribution date </label>
+	              		<input type="date" name="from_date" class="form-control" required />
+	                </div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Customer</label>
+	              		<select class="form-control" name="customer" required>
+	              			<option value="">- Choose customer -</option>
+	              		{% for cust in customer %}
+	              			<option value="{{cust.id}}">{{cust.name}}</option>
+	              		{% endfor %}
+	                  	</select>
+	                </div>
+
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Payment plan</label>
+	              		<select class="form-control" name="payment_plan" required>
+	              			<option value="">- Choose payment plan -</option>
+	                    	<option value="1000">1,000</option>
+	                     	<option value="2000">2,000</option>  
+	                     	<option value="3000">3,000</option>  
+	                     	<option value="5000">5,000</option>
+	                    </select>
+	                </div>
+
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Amount (in Naira)</label>
+	              		<input type="number" class="form-control" name="amount" placeholder="e.g. 3000" required />
+	                </div>
+
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Contribution for how many days</label>
+	              		<select class="form-control" name="payment_plan" required>
+	                    	<option value="1">1 day</option>
+	                     	<option value="2">2 days</option> 
+	                     	<option value="3">3 days</option> 
+	                     	<option value="4">4 days</option>
+	                     	<option value="5">5 day</option>
+	                     	<option value="6">6 days</option> 
+	                     	<option value="7">7 days</option> 
+	                     	<option value="8">8 days</option>
+	                     	<option value="9">9 days</option> 
+	                     	<option value="10">10 days</option>
+	                    </select>
+	                </div>
+	                
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Payment frequency</label>
+	              		<select class="form-control" name="payment_frequency" required>
+	              			<option value="">- Choose payment frequency -</option>
+	                    	<option value="Daily">Daily</option>
+	                     	<option value="Weekly">Weekly</option>  
+	                     	<option value="Monthly">Monthly</option>               
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Payment type</label>
+	              		<input type="text" class="form-control" name="payment_type" value="Deposit" readonly />
+	                </div>
+
+	                <!--
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{customer.created_by}}" readonly />
+	            	</div> -->
+            		<div class="col-6 form-group pb-4">&nbsp;<br />
+            			<button class="btn btn-primary btn-rounded mr-2">Deposit contribution</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

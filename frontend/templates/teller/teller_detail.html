@@ -1,0 +1,91 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Customer detail{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Customer profile 
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{customer.name}}'s information</h4>
+              <form method="POST" action="." class="forms-sample">
+              {% csrf_token %}
+                <div class="row">
+                  <div class="col-6 form-group">
+                    <label for="">Name</label>
+                    <p class="text-primary"><b>{{customer.name}}</b></p>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="">Gender</label>
+                    <p class="text-primary"><b>{{customer.gender}}</b></p>
+                  </div>
+                  <div class="col-6 form-group">
+                    <label for="">Phone</label>
+                    <p class="text-primary"><b>{{customer.tel}}</b></p>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="">Branch</label>
+                    <p class="text-primary"><b>{{customer.branch}}</b></p>
+                  </div>
+                <div class="col-6 form-group">
+                    <label for="">Package</label>
+                    <p class="text-primary"><b>{{customer.package}}</b></p>
+                  </div>
+                  <div class="col-6 form-group">
+                    <label for="">Business address</label>
+                    <p class="text-primary"><b>{{customer.business_addr}}</b></p>
+                </div>
+                  <div class="col-6 form-group">
+                    <label for="">Home address</label>
+                    <p class="text-primary"><b>{{customer.home_addr}}</b></p>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="">Bank</label>
+                    <p class="text-primary"><b>{{customer.acct_bank}}</b></p>
+                  </div>
+                  <div class="col-6 form-group">
+                    <label for="">Account name</label>
+                    <p class="text-primary"><b>{{customer.acct_name}}</b></p>
+                </div>
+                  <div class="col-6 form-group">
+                    <label for="">Account no</label>
+                    <p class="text-primary"><b>{{customer.acct_no}}</b></p>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="">Next of kin</label>
+                    <p class="text-primary"><b>{{customer.kin_name}}</b></p>
+                </div>
+                  <div class="col-6 form-group">
+                    <label for="">Next of kin phone</label>
+                    <p class="text-primary"><b>{{customer.kin_tel}}</b></p>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="">Relationship with kin</label>
+                    <p class="text-primary"><b>{{customer.kin_relationship}}</b></p>
+                </div>
+                  <div class="col-6 form-group">
+                    <label for="">Recorded by</label>
+                    <p class="text-primary"><b>{{customer.created_by}}</b></p>
+                </div>
+              </div>
+                <br />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

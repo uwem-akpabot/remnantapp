@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}{% endblock %} | {{ company }}</title>
+
+    {% load static %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16x16.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicons/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'img/favicons/manifest.json' %}">
+    <meta name="msapplication-TileImage" content="{% static 'img/favicons/mstile-150x150.png' %}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="{% static 'css/phoenix.min.css' %}" rel="stylesheet" id="style-default">
+    <link href="{% static 'css/user.min.css' %}" rel="stylesheet" id="user-style-default">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <main class="main" id="top">
+      <div class="container-fluid px-0">
+        <nav class="navbar navbar-light navbar-vertical navbar-vibrant navbar-expand-lg">
+          <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+            <div class="navbar-vertical-content scrollbar">
+
+              <!-- IF USER IS LOGGED-IN -->
+              {% if request.user.is_authenticated %}
+              <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">
+                  <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="cast"></span></span><span class="nav-link-text">Dashboard</span></div>
+                </a></li>
+
+                <!-- NOT CUSTOMERS, BUT OTHER USERS -->
+                {% if not user.userprofile.is_cust %}
+                <li class="nav-item">
+                  <p class="navbar-vertical-label">Registration</p>
+                  <a class="nav-link" href="{% url 'create_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="user"></span></span><span class="nav-link-text">Register a new user</span></div>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <p class="navbar-vertical-label">Core features</p>
+
+
+                  <!-- 1. ACCOUNTING PART -->
+                  <a class="nav-link dropdown-indicator" href="#accounts" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accounts">
+                    <div class="d-flex align-items-center">
+                      <div class="dropdown-indicator-icon d-flex flex-center"><span class="fas fa-caret-right fs-0"></span></div>
+                        <span class="nav-link-icon"><span data-feather="tool"></span></span><span class="nav-link-text">Accounting</span>
+                    </div>
+                  </a>
+                  {% if not user.userprofile.is_cust and not user.userprofile.is_teller and not user.userprofile.is_mgr %}
+                  <ul class="nav collapse parent" id="accounts">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'set_current_contribution_period' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Set contrib period</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'company_acct' %}"data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Company account</span></div>
+                      </a>
+                    </li>
+                  </ul>
+                  {% endif %}
+
+
+                  <!-- 2. CONTRIBUTION PART -->
+                  <a class="nav-link dropdown-indicator" href="#forms" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="forms">
+                    <div class="d-flex align-items-center">
+                      <div class="dropdown-indicator-icon d-flex flex-center"><span class="fas fa-caret-right fs-0"></span></div>
+                        <span class="nav-link-icon"><span data-feather="users"></span></span><span class="nav-link-text">Contribution</span>
+                    </div>
+                  </a>
+                  <ul class="nav collapse parent" id="forms">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contribution_mgr' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Deposit or Withdraw</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contribution_record' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Contributn record</span></div>
+                      </a>
+                    </li>
+                  </ul>
+                  {% endif %}
+                  <!-- END OF "NOT CUSTOMERS, BUT OTHER USERS" -->
+                  
+                  {% if not user.userprofile.is_cust %}
+                  <a class="nav-link dropdown-indicator" href="#third" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="third">
+                    <div class="d-flex align-items-center">
+                      <div class="dropdown-indicator-icon d-flex flex-center"><span class="fas fa-caret-right fs-0"></span></div>
+                        <span class="nav-link-icon"><span data-feather="package"></span></span><span class="nav-link-text">All users</span>
+                    </div>
+                  </a>
+                  {% endif %}
+                  
+                  <!-- DIRECTOR ONLY -->
+                  {% if not user.userprofile.is_cust and not user.userprofile.is_teller and not user.userprofile.is_mgr %}
+                  <ul class="nav collapse parent" id="third">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'manager' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Managers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'teller' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Tellers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'customer' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Customers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'create_account' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">+ Add new user</span></div>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports' %}" data-bs-toggle="" aria-expanded="false">
+                      <div class="d-flex align-items-center"><span class="nav-link-text">+ Audit Report</span></div>
+                    </a>
+                  </li>
+                  {% endif %}
+                  <!-- END OF "DIRECTOR ONLY" -->
+
+                  <!-- MANAGER ONLY -->
+                  {% if user.userprofile.is_mgr %}
+                  <ul class="nav collapse parent" id="third">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'teller' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Tellers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'customer' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Customers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'create_account' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Add new user</span></div>
+                      </a>
+                    </li>
+                  </ul>
+                  {% endif %}
+                  <!-- END OF "MANAGER" -->
+
+                  <!-- TELLER ONLY -->
+                  {% if user.userprofile.is_teller %}
+                  <ul class="nav collapse parent" id="third">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'customer' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Customers</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'create_account' %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Add new user</span></div>
+                      </a>
+                    </li>
+                  </ul>
+                  {% endif %}
+                  <!-- END OF "MANAGER" -->
+
+                  <!-- ALL CUSTOMERS ONLY -->
+                  {% if user.userprofile.is_cust %}
+                  <br />
+                  <li class="nav-item"><a class="nav-link" href="{% url 'customer_detail' user.id %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="package"></span></span>
+                      <span class="nav-link-text">My Profile</span></div>
+                  </a></li>
+                  
+                  <a class="nav-link dropdown-indicator" href="#utilities" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="utilities">
+                    <div class="d-flex align-items-center">
+                      <div class="dropdown-indicator-icon d-flex flex-center"><span class="fas fa-caret-right fs-0"></span></div><span class="nav-link-icon">
+                        <span data-feather="tool"></span></span><span class="nav-link-text">My Contribution </span>
+                    </div>
+                  </a>
+                  <ul class="nav collapse parent" id="utilities">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'user_account_summary' user.id %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Account Summary</span></div>
+                      </a></li>
+                      <li class="nav-item"><a class="nav-link" href="{% url 'user_transaction_details' user.id %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Transaction Details</span></div>
+                      </a></li>
+                      <li class="nav-item"><a class="nav-link" href="{% url 'user_wallet_balance' user.id %}" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center"><span class="nav-link-text">Wallet Balance</span></div>
+                      </a></li>
+                  </ul>
+                  
+                  {% endif %}
+                  <!-- END OF "ALL CUSTOMERS ONLY" -->
+                </li>
+
+                <li class="nav-item">
+                  <p class="navbar-vertical-label">Settings</p>
+                  
+                <!-- END OF "ALL LOGGED IN USERS" -->
+                  <a class="nav-link" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="lock"></span></span><span class="nav-link-text">Sign out</span></div>
+                  </a>
+                </li>
+              </ul>
+
+              <!-- USER NOT LOGGED-IN -->
+              {% else %} Sorry, you are not authenticated to access this page. {% endif %}
+
+            </div>
+            <div class="navbar-vertical-footer"><a class="btn btn-link border-0 fw-semi-bold d-flex ps-0" href="{% url 'logout' %}"><span class="navbar-vertical-footer-icon" data-feather="log-out"></span><span>Close the app</span></a></div>
+          </div>
+        </nav>
+
+        <nav class="navbar navbar-light navbar-top navbar-expand">
+          <div class="navbar-logo"><button class="btn navbar-toggler navbar-toggler-humburger-icon" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button> <a class="navbar-brand me-1 me-sm-3" href="{% url 'dashboard' %}">
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center"><img src="{% static 'img/logo.jpeg' %}" alt="Logo" width="23%">
+                  <p class="logo-text ms-2 d-none d-sm-block">Remnant</p>
+                </div>
+              </div>
+            </a></div>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav navbar-nav-icons ms-auto flex-row">
+              <li class="nav-item dropdown"> &nbsp;
+
+              {% if request.user.is_authenticated %}
+
+              <b>{{user.userprofile.first_name}} {{user.userprofile.last_name}}</b>
+              <span class="text-muted"> &nbsp; &mdash; <i>
+              <strong class="text-primary">
+                {% if user.userprofile.is_dir %}
+                  Director
+                {% elif user.userprofile.is_mgr %}
+                  Manager
+                {% elif user.userprofile.is_teller %}
+                  Teller
+                {% elif user.userprofile.is_cust %}
+                  Customer
+                {% else %}
+                  Not applicable
+                {% endif %}
+              </strong>
+              </i></span>
+
+            {% else %}
+              Sorry, you are not authenticated to access this page.
+            {% endif %}
+
+
+                <a class="nav-link lh-1 px-0 ms-5" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="">Menu </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarDropdownUser">
+                  <div class="card bg-white position-relative border-0">
+                    <div class="card-body p-0 overflow-auto scrollbar">
+                      <div class="text-center pt-4 pb-3">
+
+                        {% if request.user.is_authenticated %}
+
+                        <h6>{{user.first_name}} {{user.last_name}}</h6>
+                        <span class="text-muted"><i>
+                        <strong class="text-primary">I am logged-in as
+                          {% if user.userprofile.is_dir %}
+                            Director
+                          {% elif user.userprofile.is_mgr %}
+                            Manager
+                          {% elif user.userprofile.is_teller %}
+                            Teller
+                          {% elif user.userprofile.is_cust %}
+                            Customer
+                          {% else %}
+                            Not applicable
+                          {% endif %}
+                        </strong>
+                        </i></span>
+
+                        {% else %}
+                          Sorry, you are not authenticated to access this page.
+                        {% endif %}
+                      </div>
+                      <ul class="nav d-flex flex-column mb-2 pb-1">
+
+                      {% if user.userprofile.is_cust %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'customer_detail' user.id %}"><span class="me-2 text-900" data-feather="user"></span>My Profile</a></li>
+                      {% endif %}
+
+                      {% if not user.userprofile.is_cust %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{% url 'create_account' %}"><span class="me-2 text-900" data-feather="user-plus"></span>Create user account</a></li>
+                      {% endif %}
+
+                      </ul>
+                    </div>
+                    <div class="p-0 border-top">
+                      <div class="px-3"><a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{% url 'logout' %}"><span class="me-2" data-feather="log-out"></span>Sign out</a></div>
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="content pt-5" style="background:#ddf">
+          {% block content %}
+          {% endblock %}
+
+          <footer class="footer">
+            <div class="row g-0 justify-content-between align-items-center h-100 mb-3">
+              <div class="col-12 col-sm-auto text-center">
+                <p class="mb-0 text-900"><small>&copy; Copyright 2022. Product of {{company}}. </small></p>
+              </div>
+              <div class="col-12 col-sm-auto text-center">
+                <p class="mb-0 text-600">v1.0.0</p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+    <script src="{% static 'js/phoenix.js' %}"></script>
+    <script src="{% static 'js/ecommerce-dashboard.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% if messages %}
+        {% for message in messages %}
+          swal({
+            title: "{{message.extra_tags}}!",
+            text: "{{message}}",
+            icon: "success",
+            button: "Ok!"
+          });
+        {% endfor %}
+      {% endif %}
+    </script>
+    <script>
+      $(document).ready( function () {
+        $('#myTable').DataTable();
+        $('#myTable2').DataTable();
+      } )
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,152 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Update customer{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Update customer information</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Edit details</h4>
+            	<p class="card-description">Click to edit the values on this form and complete customer information</p>
+            	<form method="POST" action="." class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">
+                	<div class="col-6 form-group pb-3">
+	              		<label for="">Name</label>
+	              		<input type="text" name="name" value="{{customer.name}}" class="form-control" readonly />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Gender</label>
+	              		<select class="form-control" name="gender" required>
+	              			<option value="{{customer.gender}}" selected>{{customer.gender}}</option>
+	                    	<option value="Male">Male</option>
+	                     	<option value="Female">Female</option>                 
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Phone</label>
+	              		<input type="text" name="tel" value="{{customer.tel}}" class="form-control" required />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Payment plan</label>
+	              		<select class="form-control" name="payment_plan" required>
+							<option value="{{customer.payment_plan}}" selected>{{customer.payment_plan}}</option>
+                            <option value="200">&#8358;200</option> 
+                            <option value="500">&#8358;500</option>
+							<option value="1000">&#8358;1,000</option> 
+                            <option value="1500">&#8358;1,500</option> 
+                            <option value="2000">&#8358;2,000</option> 
+                            <option value="2500">&#8358;2,500</option> 
+                            <option value="3000">&#8358;3,000</option> 
+                            <option value="5000">&#8358;5,000</option>
+                        	<option value="5000">&#8358;10,000</option>
+                        </select>
+                    </div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Branch</label>
+	              		<select class="form-control" name="branch" required>
+	                    	<option value="{{customer.branch}}" selected>{{customer.branch}}</option>
+					    	<option value="Kuruduma1">Kuruduma1</option>
+					    	<option value="Kuruduma2">Kuruduma2</option>
+					    	<option value="Kuruduma3">Kuruduma3</option>
+					    	<option value="Kobi Makarantha">Kobi Makarantha</option>
+					    	<option value="Kobi_sarki">Kobi Sarki</option>             
+	                  	</select>
+	                </div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Package</label>
+	              		<select class="form-control" name="package" required>
+	                    	<option value="{{customer.package}}" selected>{{customer.package}}</option>
+					    	<option value="Cash">Cash</option>
+					    	<option value="Food">Food</option>
+					    	<option value="Mortgage">Mortgage</option>
+					    	<option value="NHIS">NHIS</option>
+					    	<option value="Others">Others</option>                   
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Business address</label>
+	              		<input type="text" name="business_addr" value="{{customer.business_addr}}" class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Home address</label>
+	              		<input type="text" name="home_addr" value="{{customer.home_addr}}" class="form-control" />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Bank</label>
+	              		<select class="form-control" name="acct_bank">
+	                    	<option value="{{customer.acct_bank}}" selected>{{customer.acct_bank}}</option>
+					    	<option value="Access bank">Access bank</option>
+					    	<option value="AccessDiamond">AccessDiamond</option>
+					    	<option value="Citibank">Citibank</option>
+					    	<option value="Ecobank">Ecobank</option>
+					    	<option value="Fidelity">Fidelity</option>
+					    	<option value="First bank">First bank</option>
+					    	<option value="FCMB">FCMB</option>
+					    	<option value="GTB">GTB</option>
+					    	<option value="Heritage">Heritage</option>
+					    	<option value="Keystone Bank">Keystone Bank</option>
+					    	<option value="Polaris">Polaris</option>
+					    	<option value="Providus">Providus</option>
+					    	<option value="Stanbic IBTC">Stanbic IBTC</option>
+					    	<option value="Standard Chartered">Standard Chartered</option>
+					    	<option value="Sterling Bank">Sterling Bank</option>
+					    	<option value="SunTrust Bank">SunTrust Bank</option>
+					    	<option value="Union Bank">Union Bank</option>
+					    	<option value="UBA">UBA</option>
+					    	<option value="Unity Bank">Unity Bank</option>
+					    	<option value="Wema bank">Wema bank</option>
+					    	<option value="Zenith">Zenith</option>
+					    	<option value="Others">Others</option>                    
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Account name</label>
+	              		<input type="text" name="acct_name" value="{{customer.acct_name}}"class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Account no</label>
+	              		<input type="text" name="acct_no" class="form-control" value="{{customer.acct_no}}" />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Next of kin</label>
+	              		<input type="text" name="kin_name" value="{{customer.kin_name}}" class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Next of kin phone</label>
+	              		<input type="text" name="kin_tel" class="form-control" value="{{customer.kin_tel}}" />
+	            	</div>
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Relationship with kin</label>
+	              		<input type="text" name="kin_relationship" value="{{customer.kin_relationship}}" class="form-control" />
+	            	</div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{user.userprofile.first_name}} {{user.userprofile.last_name}}" readonly />
+	            	</div>
+            		<div class="col-6 form-group pb-3">
+            			<br />
+            			<button class="btn btn-primary btn-rounded mr-2">Update customer</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

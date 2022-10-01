@@ -1,0 +1,32 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}My Account Summary{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">My Wallet</h2> 
+        <p class="">{{company}}
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></p>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Total Amount I Can Withdraw</h4><hr />
+              <p>Balance In My Wallet: </p>
+              <h1 class="text-success"><b>&#8358;{{ cust_contrb.wallet }}</b></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

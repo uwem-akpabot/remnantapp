@@ -1,0 +1,73 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Update contribution{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">Add customer's contribution</h2>
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+	  <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+            	<h4 class="card-title">Add contribution</h4>
+            	<p class="card-description">Click to update customers' contribution</p>
+            	<form method="POST" action="." class="forms-sample">
+			  	{% csrf_token %}
+                <div class="row">
+	            	<div class="col-6 form-group pb-3">
+	              		<label for="">Description</label>
+	              		<select class="form-control" name="description" required>
+	              			<option value="{{contribution.description}}" selected>{{contribution.description}}</option>
+	                    	<option value="Deposit">Deposit</option>
+	                     	<option value="Withdrawal">Withdrawal</option>                 
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Amount deposited (&#8358;)</label>
+	              		<select class="form-control" name="amount_deposited">
+	              			<option value="{{contribution.amount_deposited}}" selected>{{contribution.amount_deposited}}</option>
+	                     	<option value="1000">1000</option> 
+	                     	<option value="2000">2000</option> 
+	                     	<option value="3000">3000</option> 
+	                     	<option value="5000">5000</option>                 
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Frequency or plan</label>
+	              		<select class="form-control" name="frequency" required>
+	              			<option value="{{contribution.frequency}}" selected>{{contribution.frequency}}</option>
+	                    	<option value="Daily">Daily</option>
+	                     	<option value="Weekly">Weekly</option>                 
+	                  	</select>
+	                </div>
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Amount withdrawn (&#8358;)</label>
+	              		<input type="text" class="form-control" name="amount_withdrawn" value="{{contribution.amount_withdrawn}}" />
+	                </div>
+	                <!--
+	                <div class="col-6 form-group pb-3">
+	              		<label for="">Recorded by</label>
+	              		<input type="text" name="created_by" class="form-control" value="{{customer.created_by}}" readonly />
+	            	</div> -->
+            		<div class="col-6 form-group pb-3">
+            			<button class="btn btn-primary btn-rounded mr-2">Add contribution</button>
+            		</div>
+            	</div>
+                <br />
+          	  </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}

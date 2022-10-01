@@ -1,0 +1,267 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Customer contribution{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12">
+      <div class="mb-4">
+        <h2 class="mb-2">Customer contribution</h2>
+        <h5 class="text-700 fw-semi-bold">Add customer contribution</h5>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Add contributions</h4>
+
+              <p class="text-primary"><u>Customer</u>: <b>{{customer.name}}</b></p>
+              <form method="POST" action="." class="forms-sample">
+                {% csrf_token %}
+                <input type="text"value="{{customer.id}}" name="customer" hidden />
+
+                <input type="text"  name="transaction" value="Deposit" hidden />
+
+                <input type="text" name="recorded_by" value="{{user.userprofile.first_name}} {{user.userprofile.last_name}}" hidden />
+
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-lg-4 form-group pb-3">
+                    <label for="">Payment plan</label>
+                    <input type="text" name="payment_plan" value="{{customer.payment_plan}}"class="form-control" readonly />
+                  </div>
+
+                  <div class="col-12 col-sm-6 col-lg-4 form-group pb-3">
+                    <label for="">Amount paid (&#8358;)</label>
+                    <select class="form-control" name="amount_paid" required>
+                      <option value="{{customer.payment_plan}}" selected>{{customer.payment_plan}}</option>
+                        <option value="1000">&#8358;1,000</option>
+                        <option value="1500">&#8358;1,500</option>
+                        <option value="2000">&#8358;2,000</option>
+                        <option value="2500">&#8358;2,500</option>
+                        <option value="3000">&#8358;3,000</option>
+                        <option value="5000">&#8358;5,000</option>
+                      <option value="10000">&#8358;10,000</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-lg-4 form-group pb-3">
+                    <label for=""> Contribution <b>day</b> </label>
+                    <select class="form-control" name="contribution_day" required>
+                      <option value="{% now 'd' %}" selected>{% now 'd' %}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12 col-sm-6 col-lg-4 form-group pb-3">
+                    <label for=""> Contribution <b>month</b> </label>
+                    <select class="form-control" name="contribution_month" required>
+                      <option value="{% now 'F' %}" selected>{% now 'F' %}</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12 col-sm-6 col-lg-4 form-group pb-3">
+                    <label for=""> Contribution <b>year</b> </label>
+                    <input type="text" class="form-control" name="contribution_year" value="{% now 'Y' %}" required />
+                  </div>
+
+                <div class="col-12 col-sm-6 col-lg-4 form-group pb-4">
+                  <button class="btn btn-primary btn-rounded mr-2">Save contribution</button>
+                </div>
+              </div>
+                <label><i><b>NOTE:</b> Please record specific amounts for each day. Do not record cumulative amount for several days
+                as one record.</i></label>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-10">
+          <div class="col-12 about-text py-0 wow fadeIn" data-wow-delay="0.5s">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h4 class="btn btn-success"><b>Customer profile</b></h4>
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              Customer profile</h5>
+                            <form method="POST" action="." class="forms-sample">
+                            {% csrf_token %}
+                              <div class="row">
+                                <div class="col-4 form-group">
+                                  <label for="">Name</label>
+                                  <p class="text-primary"><b>{{customer.name}}</b></p>
+                              </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Gender</label>
+                                  <p class="text-primary"><b>{{customer.gender}}</b></p>
+                                </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Phone</label>
+                                  <p class="text-primary"><b>{{customer.tel}}</b></p>
+                              </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Payment plan</label>
+                                  <p class="text-primary"><b>&#8358;{{customer.payment_plan}}</b></p>
+                                </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Branch</label>
+                                  <p class="text-primary"><b>{{customer.branch}}</b></p>
+                                </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Package</label>
+                                  <p class="text-primary"><b>{{customer.package}}</b></p>
+                                </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Business address</label>
+                                  <p class="text-primary"><b>{{customer.business_addr}}</b></p>
+                              </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Home address</label>
+                                  <p class="text-primary"><b>{{customer.home_addr}}</b></p>
+                              </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Bank</label>
+                                  <p class="text-primary"><b>{{customer.acct_bank}}</b></p>
+                                </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Account name</label>
+                                  <p class="text-primary"><b>{{customer.acct_name}}</b></p>
+                              </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Account no</label>
+                                  <p class="text-primary"><b>{{customer.acct_no}}</b></p>
+                              </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Next of kin</label>
+                                  <p class="text-primary"><b>{{customer.kin_name}}</b></p>
+                              </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Next of kin phone</label>
+                                  <p class="text-primary"><b>{{customer.kin_tel}}</b></p>
+                              </div>
+                              <div class="col-4 form-group">
+                                  <label for="">Relationship with kin</label>
+                                  <p class="text-primary"><b>{{customer.kin_relationship}}</b></p>
+                              </div>
+                                <div class="col-4 form-group">
+                                  <label for="">Recorded by</label>
+                                  <p class="text-primary"><b>{{customer.created_by}}</b></p>
+                              </div>
+                            </div>
+                              <br />
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <h4 class="btn btn-success"><b>Contribution history</b></h4>
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">
+                              Contribution history</h5>
+                            <table class="table table-striped table-responsive" id="myTable">
+                              <thead>
+                                <tr>
+                                  <th>Contrib date</th>
+                                  <th>Amount</th>
+                                  <th>Recorded</th>
+                                  <th>Collector</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for cont in contrb_percustomer %}
+                                <tr>
+                                  <td><h6 class="mb-0">{{cont.contribution_date}}</h6></td>
+                                  <td><h6 class="mb-0">&#8358;{{cont.amount_paid}}</h6></td>
+                                  <td><h6 class="mb-0">{{cont.created_at}}</h6></td>
+                                  <td><h6 class="mb-0">{{cont.recorded_by}}</h6></td>
+                                </tr>
+                                {% endfor %}
+
+                               </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

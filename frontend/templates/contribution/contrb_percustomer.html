@@ -1,0 +1,61 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Contribution per customer{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div class="pb-5">
+  <div class="row g-5">
+    <div class="col-12 col-xxl-6">
+      <div class="mb-4">
+        <h2 class="mb-2">{{customer.name}}'s contribution 
+        <h5 class="text-700 fw-semi-bold">{{company}} 
+          <a href="javascript:history.back()" class="btn btn-primary btn-sm font-weight-bold pull-right" title="Back"><span data-feather="arrow-left"></span> Back</a></h5>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{customer.name}}'s information</h4>
+              <form method="POST" action="." class="forms-sample">
+              {% csrf_token %}
+                <div class="row">
+                  <table class="table table-striped table-responsive" id="myTable">
+                    <thead>
+                      <tr>
+                        <th>Descriptn</th>
+                        <th>Amount</th>
+                        <th>Plan</th>
+                        <th>Paid on</th>
+                        <th>Staff</th>
+                        <th>Recorded</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for cc in contrb_percustomer %}
+                      <tr>
+                        <td><h6 class="mb-0">{{cc.description}}</h6></td>
+                        <td><h6 class="mb-0">&#8358;{{cc.amount}}</h6></td>
+                        <td><h6 class="mb-0">{{cc.payment_plan}}</h6></td>
+                        <td><h6 class="mb-0">{{cc.payment_date}}</h6></td>
+                        <td><h6 class="mb-0">{{cc.staff_incharge}}</h6></td>
+                        <td><h6 class="mb-0">{{cc.created_at}}</h6></td>
+                      </tr>
+                      {% endfor %}
+
+                     </tbody>
+                  </table>
+
+                </div>
+                <br />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><br />
+
+    </div>
+  </div>
+</div>
+{% endblock %}
